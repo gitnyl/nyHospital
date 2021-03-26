@@ -1,7 +1,7 @@
 
-### personal project
+## personal project
 
-#### 병원 진료 예약
+## 병원 진료 예약
 ___ 
 
 * .
