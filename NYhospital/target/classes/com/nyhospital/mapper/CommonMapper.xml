@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nyhospital.mapper.CommonMapper">
+	
+	<!-- 회원가입 시 회원정보 insert -->
+	<insert id="insertUser"> insert into tbl_member(userid, userpw, name, email, phone) values(#{userId}, #{userPw}, #{name}, #{email}, #{phone}) </insert>
+
+	<!-- 회원가입 시 권한 추가  -->
+	<insert id="insertUserAuth"> insert into tbl_member_auth(userid, auth) values(#{userId}, 'ROLE_USER') </insert>
+	
+	<!-- id 중복체크  -->
+	<select id="checkID" resultType="int"> select count(*) from tbl_member where userid=#{userId} </select>
+	
+	<!-- 이메일 중복체크  -->
+	<select id="checkEmail" resultType="int"> select count(*) from tbl_member where email=#{email} </select>
+	
+	<!-- 회원의 비밀번호를 임시 비밀번호로 변경  -->
+	<update id="updateNewPassword"> update tbl_member set userpw=#{userPw} where email=#{email} </update>
+
+	<!-- 이메일로 회원 아이디 찾기  -->
+	<select id="findID" resultType="String"> select userid from tbl_member where email=#{email} </select>
+	
+    <!-- 회원정보&회원 권한 select -->
+    <select id="read" resultMap="memberMap">
+		SELECT 	mem.userid, mem.userpw, mem.name, mem.email, mem.phone, mem.regdate, mem.outdate, mem.onoff, mem.ownroom, auth.auth
+		FROM 	tbl_member mem 
+		LEFT OUTER JOIN  tbl_member_auth auth
+		ON 		mem.userid=auth.userid
+		WHERE 	mem.userid=#{userId}
+    </select>
+    
+    <resultMap type="com.nyhospital.domain.MemberDTO" id="memberMap">
+	    <id property="userId" column="userid"/>
+	    <result property="userId" column="userid"/>
+	    <result property="userPw" column="userpw"/>
+	    <result property="name" column="name"/>
+	    <result property="email" column="email"/>
+	    <result property="phone" column="phone"/>
+	    <result property="regDate" column="regdate"/>
+	    <result property="outDate" column="outdate"/>
+	    <result property="onOff" column="onoff"/>
+	    <result property="ownRoom" column="ownroom"/>
+	    <result property="ratedScore" column="ratedscore"/>
+	    <collection property="authList" resultMap="authMap">
+	    </collection> 
+	</resultMap>
+	
+	<resultMap type="com.nyhospital.domain.AuthVO" id="authMap">
+	    <result property="userid" column="userid"/>
+	    <result property="auth" column="auth"/>
+	</resultMap>
+  
+</mapper>

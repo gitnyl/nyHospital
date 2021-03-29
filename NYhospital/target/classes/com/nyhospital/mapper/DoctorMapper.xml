@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nyhospital.mapper.DoctorMaper">
+
+	
+	<!-- 총 의사 수 -->
+	<select id="getTotalCount" resultType="int"> SELECT count(*) FROM tbl_doctor </select>
+	
+	<!-- 의사 정보 상세보기 -->
+	<select id="readDoctor" resultType="com.nyhospital.domain.DoctorVO">
+		SELECT * FROM tbl_doctor WHERE did=#{did}
+	</select>
+	
+	<!-- 의사 신규 등록 -->
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="did" order="BEFORE" resultType="long"> 
+			SELECT seq_doctor.nextval FROM dual 
+		</selectKey>
+		insert into tbl_doctor(did, dname, dept)  values(#{did}, #{dname}, #{dept})
+	</insert>
+	
+	<!-- 의사 정보 수정 -->
+	<update id="updateDoctor"> 
+		UPDATE tbl_doctor  SET dname=#{dname}, dept=#{dept}  WHERE did=#{did}
+	</update>
+	
+	<!-- 의사 삭제 -->
+	<delete id="deleteDoctor">
+		DELETE tbl_doctor WHERE did=#{did}
+	</delete>
+		
+	<!-- 모든 의사 목록 출력 -->
+	<select id="printAllDoctor" resultType="com.nyhospital.domain.DoctorVO">
+		<![CDATA[ SELECT did, dname, dept  FROM tbl_doctor ]]>
+	</select>
+	
+	<!-- 전체 의사 목록 (페이징 처리) -->
+	<select id="getListWithPaging" resultType="com.nyhospital.domain.DoctorVO">
+		<![CDATA[ SELECT * FROM ( SELECT /*+INDEX_DESC(tbl_doctor pk_doctor) */
+		 rownum rn,did,dname,dept FROM tbl_doctor WHERE ]]>
+		<include refid="criteria"/>
+		<![CDATA[ rownum <= #{pageNum}*#{amount} ) WHERE rn > ( #{pageNum}-1)*#{amount} ]]>
+	</select>
+	
+	<!-- 의사 검색 -->
+  	<sql id="criteria">
+		<trim prefix="(" suffix=") and " prefixOverrides="or">
+			<foreach item="type" collection="typeArr">
+				<trim prefix="or">
+					<choose>
+						<when test="type=='I'.toString()"> did like '%'||#{keyword}||'%' </when>
+						<when test="type=='N'.toString()"> dname like '%'||#{keyword}||'%' </when>
+						<when test="type=='D'.toString()"> dept like '%'||#{keyword}||'%' </when>
+					</choose>
+				</trim>
+			</foreach>
+		</trim>
+	</sql>
+	
+	<!-- 예약정보와 의사정보 select -->
+    <!-- 회원정보와 회원 권한 select -->
+<!-- 
+    <select id="read" resultMap="memberMap">
+		SELECT mem.userid, mem.userpw, mem.nickname, mem.email,mem.regdate,mem.outdate,mem.onoff,mem.ownroom,mem.ratedscore,auth.auth
+		FROM tbl_member mem LEFT OUTER JOIN tbl_member_auth auth
+		ON mem.userid=auth.userid
+		WHERE mem.userid = #{userid}
+    </select>
+-->
+    
+</mapper>
+

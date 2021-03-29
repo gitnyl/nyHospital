@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nyhospital.mapper.AdminMapper">
+	
+	<!-- 전체 회원목록 출력 -->
+	<select id="printAllMember" resultType="com.nyhospital.domain.MemberDTO">
+		<![CDATA[ select userid, nickname, email, regdate, ratedscore, onoff from tbl_member ]]>
+	</select>
+	
+	<!-- 가입한 회원 수 select --> 
+	<select id="readInMember" resultType="com.nyhospital.domain.InOutMemberVO">
+		select 
+			(select count(*) from tbl_member where (TRUNC(REGDATE,'DDD')=TRUNC(SYSDATE,'DDD'))) as InMember0,
+			(select count(*) from tbl_member where (TRUNC(REGDATE,'DDD')=TRUNC(SYSDATE-1,'DDD'))) as InMember1,
+			(select count(*) from tbl_member where (TRUNC(REGDATE,'DDD')=TRUNC(SYSDATE-2,'DDD'))) as InMember2,
+			(select count(*) from tbl_member where (TRUNC(REGDATE,'DDD')=TRUNC(SYSDATE-3,'DDD'))) as InMember3,
+			(select count(*) from tbl_member where (TRUNC(REGDATE,'DDD')=TRUNC(SYSDATE-4,'DDD'))) as InMember4,
+			(select count(*) from tbl_member where (TRUNC(REGDATE,'DDD')=TRUNC(SYSDATE-5,'DDD'))) as InMember5,
+			(select count(*) from tbl_member where (TRUNC(REGDATE,'DDD')=TRUNC(SYSDATE-6,'DDD'))) as InMember6
+		from dual
+	</select>
+	
+	<!-- 탈퇴한 회원 수 select --> 
+	<select id="readOutMember" resultType="com.nyhospital.domain.InOutMemberVO">
+		select 
+			(select count(*) from tbl_member where (OUTDATE IS NOT NULL) AND (TRUNC(OUTDATE,'DDD')=TRUNC(SYSDATE,'DDD'))) as OutMember0,
+			(select count(*) from tbl_member where (OUTDATE IS NOT NULL) AND (TRUNC(OUTDATE,'DDD')=TRUNC(SYSDATE-1,'DDD'))) as OutMember1,
+			(select count(*) from tbl_member where (OUTDATE IS NOT NULL) AND (TRUNC(OUTDATE,'DDD')=TRUNC(SYSDATE-2,'DDD'))) as OutMember2,
+			(select count(*) from tbl_member where (OUTDATE IS NOT NULL) AND (TRUNC(OUTDATE,'DDD')=TRUNC(SYSDATE-3,'DDD'))) as OutMember3,
+			(select count(*) from tbl_member where (OUTDATE IS NOT NULL) AND (TRUNC(OUTDATE,'DDD')=TRUNC(SYSDATE-4,'DDD'))) as OutMember4,
+			(select count(*) from tbl_member where (OUTDATE IS NOT NULL) AND (TRUNC(OUTDATE,'DDD')=TRUNC(SYSDATE-5,'DDD'))) as OutMember5,
+			(select count(*) from tbl_member where (OUTDATE IS NOT NULL) AND (TRUNC(OUTDATE,'DDD')=TRUNC(SYSDATE-6,'DDD'))) as OutMember6
+		from dual
+	</select>
+    
+	<!-- 이메일로 회원 아이디 찾기  -->
+	<select id="findID" resultType="String"> select userid from tbl_member where email=#{email} </select>
+	
+	<!-- 자유게시판 신고된 글 출력  -->
+	<select id="getList" resultType="com.nyhospital.domain.BoardVO">
+		<![CDATA[ select * from tbl_board where reportcount>=1 ]]>
+	</select>
+	
+</mapper>
