@@ -17,8 +17,8 @@ ___
 ##### 의료진 정보 관리 페이지 (신규등록/수정/삭제)
 <img src="https://user-images.githubusercontent.com/69742347/112989663-1c44d500-91a0-11eb-9fc0-9787ef7a0beb.png"  width="1400">
 
-##### 진료예약현황조회·관리 페이지 
-<img src="https://user-images.githubusercontent.com/69742347/112989668-1e0e9880-91a0-11eb-98fa-a54c645d4230.png"  width="1400">
+##### 진료예약 현황·관리자 페이지 
+<img src="https://user-images.githubusercontent.com/69742347/113163525-37d0de00-927b-11eb-8d72-ce063be14b1b.png"  width="1400">
 
 ##### 진료 예약 페이지
 <img src="https://user-images.githubusercontent.com/69742347/112608905-3dcf5500-8e5e-11eb-8e45-1a3147f2b9e0.png"  width="1400">
