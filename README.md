@@ -53,4 +53,7 @@ ___
 ##### 마이페이지 > 내 게시물 보기 
 <img src="https://user-images.githubusercontent.com/69742347/113313700-77183100-9346-11eb-9189-46d01f38ff99.png"  width="1000">
 
+##### 마이페이지 > 내 문의내역 목록 
+<img src="https://user-images.githubusercontent.com/69742347/113315420-3c16fd00-9348-11eb-96d4-a75e2cd6f2d3.png"  width="1000">
+
 
