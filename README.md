@@ -47,6 +47,10 @@ ___
 ##### 병원 위치 지도 
 <img src="https://user-images.githubusercontent.com/69742347/112724426-9c77fa00-8f56-11eb-8c4a-f4ca78bb1219.png"  width="1000">
 
+##### 마이페이지 > 진료예약 내역 
+<img src="https://user-images.githubusercontent.com/69742347/113313411-2f91a500-9346-11eb-89aa-d22e3b072d8c.png"  width="1000">
 
+##### 마이페이지 > 내 게시물 보기 
+<img src="https://user-images.githubusercontent.com/69742347/113313418-30c2d200-9346-11eb-8a02-ca3119a369f6.png"  width="1000">
 
 
